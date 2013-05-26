@@ -1,7 +1,10 @@
-class CubeRenderer
-  attr_reader :size
+require_relative "cube"
 
-  def initialize(size = 5)
+class CubeRenderer
+  attr_reader :cube, :size
+
+  def initialize(alg, size = 7)
+    @cube = Cube.new(size, alg)
     @size = size
   end
 
@@ -26,6 +29,8 @@ class CubeRenderer
   def render
     render_top_stickers
     render_side_stickers
+    puts (@cr.target.methods - Object.methods).sort
+    @cr.target.write_to_png("file.png")
     @cr.target.finish
   end
 
@@ -38,14 +43,39 @@ class CubeRenderer
   end
 
   def render_side_stickers
+    faces = [
+      [Cube::B, :top, cube.from_bottom(0)],
+      [Cube::R, :right, cube.from_top(0)],
+      [Cube::F, :bottom, cube.from_top(0)],
+      [Cube::L, :left, cube.from_top(0)]
+    ]
 
-    0.upto(size - 1) do |i|
-      render_side(i, :bottom, :blue)
-      render_side(i, :top, :green)
-      render_side(i, :left, :orange)
-      render_side(i, :right, :red)
+    puts cube
+              
+    faces.each do |(face, side, row)|
+      stickers = row.map { |i| cube.sides[face][i] }
+      colors = stickers.map { |sticker| sticker_to_color(sticker) }
+      colors.each_with_index do |color,i|
+        render_side(i, side, color)
+      end
     end
+  end
 
+  def sticker_to_color(sticker)
+    case sticker
+    when "U"
+      :white
+    when "F"
+      :green
+    when "R"
+      :red
+    when "L"
+      :orange
+    when "D"
+      :yellow
+    when "B"
+      :blue
+    end
   end
 
   def render_side(index, side, color)
@@ -100,7 +130,7 @@ class CubeRenderer
   end
 
   def side_thickness
-    5
+    10
   end
 
   def render_cubie(x,y)

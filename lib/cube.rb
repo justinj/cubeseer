@@ -31,6 +31,23 @@ class Cube
     r += single_side(sides[5])
   end
 
+  def from_top(n)
+    first = n * size
+    (first...(first + size)).to_a
+  end
+
+  def from_bottom(n)
+    from_top(size - n - 1)
+  end
+
+  def from_left(n)
+    (n...(size*size)).step(size).to_a
+  end
+
+  def from_right(n)
+    from_left(size - n - 1)
+  end
+
   private
 
   def perform(alg)
@@ -92,24 +109,6 @@ class Cube
       ] 
     end
   end
-
-  def from_top(n)
-    first = n * size
-    (first...(first + size)).to_a
-  end
-
-  def from_bottom(n)
-    from_top(size - n - 1)
-  end
-
-  def from_left(n)
-    (n...(size*size)).step(size).to_a
-  end
-
-  def from_right(n)
-    from_left(size - n - 1)
-  end
-
   def turn_face(move)
     face = move[0]
     index = face_index(face)
