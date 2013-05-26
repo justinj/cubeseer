@@ -1,5 +1,3 @@
-require 'cairo'
-
 class CubeRenderer
   attr_reader :size
 
@@ -163,5 +161,3 @@ class CubeRenderer
   end
 
 end
-
-CubeRenderer.new.draw
