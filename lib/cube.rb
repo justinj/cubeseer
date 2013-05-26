@@ -4,7 +4,7 @@ require_relative "alg_expander"
 class Cube
   attr_reader :size
   attr_accessor :sides
-  
+
   U = 0
   L = 1
   F = 2
@@ -12,38 +12,58 @@ class Cube
   D = 4
   B = 5
 
-  SIDE_NAMES = ["U", "L", "F", "R", "D", "B"]
-
-  def initialize(size, sides=nil)
+  def initialize(size, alg)
     @size = size
     sticker_count = size * size
-    @sides = sides || SIDE_NAMES.map { |sticker| [sticker] * sticker_count }
+    @sides = SIDE_NAMES.map { |sticker| [sticker] * sticker_count }
+    perform(alg)
   end
 
-  def rep
-    new_sides = sides.dup.map(&:dup)
-    r = ""
-
-    insert_single_side(new_sides[0], r)
-    size.times do
-      (1..3).each { |n| r << next_n(new_sides[n], size) }
-      r << "\n"
+  def to_s
+    r = single_side(sides[0])
+    size.times do |i|
+      (1..3).each do |n| 
+        r << sides[n].each_slice(size).to_a[i].join 
+      end
+      r += "\n"
     end
-    insert_single_side(new_sides[4], r)
-    insert_single_side(new_sides[5], r)
-
-    r
+    r += single_side(sides[4])
+    r += single_side(sides[5])
   end
+
+  private
+
+  def perform(alg)
+    moves = AlgExpander.new.expand(alg)
+    moves.each do |move|
+      turn(move)
+    end
+  end
+
+  def turn(move)
+    turn_sides(move)
+    turn_face(move)
+  end
+
+  def turn_sides(move)
+    faces_with_stickers = get_cycle(move).zip(get_indices(move))
+    cycles = (0...size).map do |index|
+      faces_with_stickers.map { |(face, indices)| [face, indices[index]] }
+    end
+    perform_cycles(cycles)
+  end
+
+  SIDE_FACES = {
+    "R"  => [U, B, D, F],
+    "L"  => [F, D, B, U],
+    "U"  => [R, F, L, B],
+    "D"  => [B, L, F, R],
+    "F"  => [U, R, D, L],
+    "B"  => [L, D, R, U]
+  }
 
   def get_cycle(move)
-    {
-      "R"  => [U, B, D, F],
-      "L"  => [F, D, B, U],
-      "U"  => [R, F, L, B],
-      "D"  => [B, L, F, R],
-      "F"  => [U, R, D, L],
-      "B"  => [L, D, R, U]
-    }[move]
+    SIDE_FACES.fetch(move)
   end
 
   def get_indices(move)
@@ -54,11 +74,22 @@ class Cube
       [from_left(0)] * 4
     when "U"
       [from_top(0)] * 3 + [from_bottom(0).reverse]
+    when "D"
+      [from_top(0).reverse] + [from_bottom(0)] * 3
     when "F"
-      [from_bottom(0),
-       from_left(0),
-       from_top(0).reverse,
-       from_right(0).reverse] 
+      [
+        from_bottom(0),
+        from_left(0),
+        from_top(0).reverse,
+        from_right(0).reverse
+      ] 
+    when "B"
+      [
+        from_left(0),
+        from_bottom(0).reverse,
+        from_right(0).reverse,
+        from_top(0)
+      ] 
     end
   end
 
@@ -79,30 +110,27 @@ class Cube
     from_left(size - n - 1)
   end
 
-  def perform(alg)
-    moves = AlgExpander.new.expand(alg)
-    moves.inject(dup) do |state, move|
-      state.turn(move)
-    end
+  def turn_face(move)
+    face = move[0]
+    index = face_index(face)
+    sides[index] = rotate_face(sides[index])
   end
 
-  def turn(move)
-    state = turn_sides(move)
-    state.turn_face(move)
-    state
+  def single_side(side)
+    offset + side.each_slice(size).map(&:join).join("\n#{offset}") + "\n"
   end
+
+  def offset
+    " " * size
+  end
+
+  SIDE_NAMES = ["U", "L", "F", "R", "D", "B"]
 
   def face_index(face)
     SIDE_NAMES.find_index(face)
   end
 
-  def turn_face(move)
-    face = move[0]
-    index = face_index(face)
-    sides[index] = rotate(sides[index])
-  end
-
-  def rotate(array)
+  def rotate_face(array)
     result = Array.new(array.count)
     array.each_with_index do |value, i|
       x = i % size
@@ -114,41 +142,25 @@ class Cube
     result
   end
 
-  private
-
-  def turn_sides(move)
-    to_cycle = get_cycle(move)
-    indices = get_indices(move)[0]
-
-    cycles = to_cycle.zip(get_indices(move))
-
-    cycles = (0...size).map do |index|
-      cycles.map { |(face, indices)| [face, indices[index]] }
-    end
-
-    perform_cycles(cycles)
-  end
-
   def perform_cycles(cycles)
-    result = Cube.new(size, sides.map(&:dup))
-
     cycles.each do |cycle|
-      buffer = result.sides[cycle.last[0]][cycle.last[1]]
-      cycle.each_cons(2).reverse_each do |((from_face, from_index), (to_face, to_index))|
-        result.sides[to_face][to_index] = result.sides[from_face][from_index]
-      end
-      result.sides[cycle.first[0]][cycle.first[1]] = buffer
-    end
-    result
-  end
-
-  def next_n(ary, n)
-    (1..n).map { ary.shift.to_s }.join
-  end
-
-  def insert_single_side(side, str)
-    size.times do
-      str << " " * size + next_n(side, size) + "\n"
+      perform_cycle(cycle)
     end
   end
+
+  def perform_cycle(cycle)
+    # We need to save the last sticker since we'll overwrite
+    # it as we go through all the pieces
+    last_sticker = sides[cycle.last[0]][cycle.last[1]]
+
+    cycle.each_cons(2).reverse_each do |((from_face, from_index), (to_face, to_index))|
+      sides[to_face][to_index] = sides[from_face][from_index]
+    end
+
+    sides[cycle.first[0]][cycle.first[1]] = last_sticker
+  end
+
+  # def next_n(ary)
+  #   (1..n).map { ary.shift.to_s }.join
+  # end
 end

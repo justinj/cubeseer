@@ -2,17 +2,8 @@ require_relative "../lib/cube"
 
 describe Cube do
 
-  describe "#rotate" do
-    it "rotates the square representation of an array clockwise" do
-      Cube.new(2).rotate([1, 2,
-                          3, 4]).must_equal(
-                         [3, 1,
-                          4, 2])
-    end
-  end
-
-  it "creates a representation of itself" do
-    Cube.new(2).rep.must_equal <<EOF
+  it "creates a to_sresentation of itself" do
+    Cube.new(2, "").to_s.must_equal <<EOF
   UU
   UU
 LLFFRR
@@ -25,7 +16,7 @@ EOF
   end
 
   it "works for multiple sizes" do
-    Cube.new(3).rep.must_equal <<EOF
+    Cube.new(3, "").to_s.must_equal <<EOF
    UUU
    UUU
    UUU
@@ -44,7 +35,7 @@ EOF
   describe "turns" do
 
     it "does R' turns" do
-      Cube.new(2).perform("R'").rep.must_equal <<EOF
+      Cube.new(2, "R'").to_s.must_equal <<EOF
   UB
   UB
 LLFURR
@@ -57,7 +48,7 @@ EOF
     end
 
     it "does L turns" do
-      Cube.new(2).perform("L").rep.must_equal <<EOF
+      Cube.new(2, "L").to_s.must_equal <<EOF
   BU
   BU
 LLUFRR
@@ -70,7 +61,7 @@ EOF
     end
 
     it "does R turns" do
-      Cube.new(2).perform("R").rep.must_equal <<EOF
+      Cube.new(2, "R").to_s.must_equal <<EOF
   UF
   UF
 LLFDRR
@@ -83,7 +74,7 @@ EOF
     end
 
     it "does U turns" do
-      Cube.new(2).perform("U").rep.must_equal <<EOF
+      Cube.new(2, "U").to_s.must_equal <<EOF
   UU
   UU
 FFRRBB
@@ -96,7 +87,7 @@ EOF
     end
 
     it "does multiple turns" do
-      Cube.new(2).perform("R U").rep.must_equal <<EOF
+      Cube.new(2, "R U").to_s.must_equal <<EOF
   UU
   FF
 FDRRUB
@@ -109,7 +100,7 @@ EOF
     end
 
     it "does multiple turns for other cubes" do
-      Cube.new(3).perform("R F").rep.must_equal <<EOF
+      Cube.new(3, "R F").to_s.must_equal <<EOF
    UUF
    UUF
    LLL
@@ -126,7 +117,7 @@ EOF
     end
 
     it "does R turns for other cubes" do
-      Cube.new(3).perform("R").rep.must_equal <<EOF
+      Cube.new(3, "R").to_s.must_equal <<EOF
    UUF
    UUF
    UUF
