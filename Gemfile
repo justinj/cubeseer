@@ -1,6 +1,6 @@
 source :rubygems
 
-gem "cairo"
+gem "rmagick"
 gem "sinatra"
 gem "rake"
 

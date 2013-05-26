@@ -44,7 +44,7 @@ class CubeRenderer
   def render_side_stickers
     faces = [
       [Cube::B, :top, cube.from_bottom(0)],
-      [Cube::R, :right, cube.from_top(0)],
+      [Cube::R, :right, cube.from_top(0).reverse],
       [Cube::F, :bottom, cube.from_top(0)],
       [Cube::L, :left, cube.from_top(0)]
     ]
