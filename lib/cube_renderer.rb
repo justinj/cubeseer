@@ -29,7 +29,6 @@ class CubeRenderer
   def render
     render_top_stickers
     render_side_stickers
-    puts (@cr.target.methods - Object.methods).sort
     @cr.target.write_to_png("file.png")
     @cr.target.finish
   end
@@ -50,7 +49,6 @@ class CubeRenderer
       [Cube::L, :left, cube.from_top(0)]
     ]
 
-    puts cube
               
     faces.each do |(face, side, row)|
       stickers = row.map { |i| cube.sides[face][i] }
@@ -134,7 +132,6 @@ class CubeRenderer
   end
 
   def render_cubie(x,y)
-    puts cube
     color = sticker_to_color(cube.sides[Cube::U][x + y * size])
     render_x = x * cubie_width + x_offset
     render_y = y * cubie_height + y_offset

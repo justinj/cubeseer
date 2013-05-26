@@ -1,4 +1,3 @@
-require "minitest/autorun" 
 require_relative "alg_expander"
 
 class Cube
