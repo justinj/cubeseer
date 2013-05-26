@@ -3,7 +3,7 @@ require_relative "cube"
 class CubeRenderer
   attr_reader :cube, :size
 
-  def initialize(alg, size = 7)
+  def initialize(alg, size = 3)
     @cube = Cube.new(size, alg)
     @size = size
   end
@@ -134,6 +134,8 @@ class CubeRenderer
   end
 
   def render_cubie(x,y)
+    puts cube
+    color = sticker_to_color(cube.sides[Cube::U][x + y * size])
     render_x = x * cubie_width + x_offset
     render_y = y * cubie_height + y_offset
 
@@ -141,7 +143,7 @@ class CubeRenderer
                        y: render_y, 
                        w: cubie_width, 
                        h: cubie_height,
-                      color: :yellow)
+                      color: color)
   end
 
   def render_sticker(args)

@@ -18,4 +18,8 @@ describe AlgExpander do
   it "expands multiple-move algs" do
     expander.expand("R U2").must_equal ["R", "U", "U"]
   end
+
+  it "doesn't mind if there's no whitespace" do
+    expander.expand("RU2").must_equal ["R", "U", "U"]
+  end
 end

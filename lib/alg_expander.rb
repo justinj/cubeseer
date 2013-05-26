@@ -1,10 +1,19 @@
 class AlgExpander
   def expand(alg)
-    moves = alg.split(/\s+/)
+    moves = split_alg(alg)
     moves.collect_concat { |move| expand_move(move) }
   end
 
   private
+
+  def split_alg(alg)
+    alg = alg.gsub(/\s+/, "")
+    alg.each_char.slice_before { |char| face? char }.map(&:join)
+  end
+
+  def face?(char)
+    %w(U D L R F B).include? char
+  end
 
   def expand_move(move)
     [face(move)] * 
