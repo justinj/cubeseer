@@ -1,2 +1,1 @@
-https://github.com/rumblelabs/heroku-buildpack-cairo
-https://github.com/heroku/heroku-buildpack-ruby.git
+BUILDPACK_URL="git://github.com/udzura/heroku-buildpack-ruby.git#with-cairo"
