@@ -1,7 +1,7 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
-    cairo (1.12.6)
+    cairo (1.12.4)
       pkg-config
     pkg-config (1.1.4)
     rack (1.5.2)
@@ -18,6 +18,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cairo
+  cairo (= 1.12.4)
   rake
   sinatra
