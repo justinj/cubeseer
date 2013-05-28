@@ -54,6 +54,19 @@ class TestQueryOnU < QueryTest
   end
 end
 
+class TestQueryOnRU < QueryTest
+  def cube
+    Cube.algorithm(3, "R U")
+  end
+
+  def test_entire_face
+    assert_query "UBL:UFR", [
+      [:U, :U, :U],
+      [:U, :U, :U],
+      [:F, :F, :F]]   
+  end
+end
+
 class TestQueryOnR < QueryTest
   def cube
     Cube.algorithm(3, "R")

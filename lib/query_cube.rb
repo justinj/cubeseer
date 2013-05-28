@@ -50,6 +50,8 @@ class Cube
     affected_sides.zip(to_cycle).each do |(side, face)|
       sides[side] = face
     end
+
+    sides[move] = rotate_face_clockwise(sides[move])
   end
 
   def rotate_each(to_rotate, amounts)
