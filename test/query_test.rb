@@ -1,28 +1,20 @@
 require "minitest/autorun"
 
-require_relative "../lib/cube"
+require_relative "../lib/query_cube"
 
-class QueryTest < Minitest::Test
+class QueryTest < MiniTest::Test
   def cube
     raise "subclasses must implement this with the cube they want"
   end
 
-  def assert_query query, expected
-    assert cube.query(query) == expected
+  def assert_query query, expected, message=nil
+    assert_equal expected, cube.query(query), message
   end
 end
 
 class TestQueryOnSolvedCube < QueryTest
   def cube
-    Cube.new(3, "")
-  end
-
-  def test_single_stickers
-    assert_query "ULF", :U
-    assert_query "UFR", :U
-    assert_query "URB", :U
-    assert_query "UBL", :U
-    assert_query "UBL:UBL", [[:U]]
+    Cube.algorithm(3, "")
   end
 
   def test_entire_face
@@ -33,21 +25,38 @@ class TestQueryOnSolvedCube < QueryTest
   end
 
   def test_row
-    assert_query "ULF:UFR" [[:U, :U, :U]]
+    assert_query "UBL:UBL", [[:U]], "single sticker"
+    assert_query "UBL:URB", [[:U, :U, :U]], "along back"
+    assert_query "ULF:UFR", [[:U], [:U], [:U]], "along front"
+    assert_query "URB:UFR", [[:U, :U, :U]], "along right"
+  end
+
+end
+
+class TestQueryOnU < QueryTest
+  def cube
+    Cube.algorithm(3, "U")
+  end
+
+  def test_entire_face
+    assert_query "UBL:UFR", [
+      [:U, :U, :U],
+      [:U, :U, :U],
+      [:U, :U, :U]]   
+    assert_query "FUL:FDR", [
+      [:R, :R, :R],
+      [:F, :F, :F],
+      [:F, :F, :F]]   
+    assert_query "FRU:FLD", [
+      [:R, :F, :F],
+      [:R, :F, :F],
+      [:R, :F, :F]]   
   end
 end
 
-class TestQueryOnUnsolvedCube < QueryTest
+class TestQueryOnR < QueryTest
   def cube
-    cube.new(3, "R")
-  end
-
-  def test_single_stickers
-    assert_query "ULF", :U
-    assert_query "UFR", :F
-    assert_query "URB", :F
-    assert_query "UBL", :U
-    assert_query "UBL:UBL", [[:U]]
+    Cube.algorithm(3, "R")
   end
 
   def test_entire_face
@@ -55,14 +64,29 @@ class TestQueryOnUnsolvedCube < QueryTest
       [:U, :U, :F],
       [:U, :U, :F],
       [:U, :U, :F]]   
-    assert_query "URB:UFR", [
-      [:F, :F, :F],
-      [:U, :U, :U],
-      [:U, :U, :U]]   
-  end
-
-  def test_row
-    assert_query "ULF:UFR" [[:U, :U, :F]]
-    assert_query "UFR:ULF" [[:F, :U, :U]]
   end
 end
+
+class TestQueryOnUprime < QueryTest
+  def cube
+    Cube.algorithm(3, "U'")
+  end
+
+  def test_entire_face
+    assert_query "UBL:UFR", [
+      [:U, :U, :U],
+      [:U, :U, :U],
+      [:U, :U, :U]]   
+    assert_query "FUL:FDR", [
+      [:L, :L, :L],
+      [:F, :F, :F],
+      [:F, :F, :F]]   
+  end
+end
+
+# error cases(?):
+# XYZ : ABC
+# XYZ :ABC
+# XYZ: ABC
+# WXYZ: ABC
+# XYZ: ABC

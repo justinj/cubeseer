@@ -102,9 +102,9 @@ class Cube
     when "B"
       [
         from_left(0),
-        from_bottom(0).reverse,
+        from_bottom(0),
         from_right(0).reverse,
-        from_top(0)
+        from_top(0).reverse
       ] 
     end
   end

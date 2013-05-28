@@ -1,3 +1,4 @@
+require "cairo"
 require_relative "cube"
 
 class CubeRenderer
@@ -8,11 +9,13 @@ class CubeRenderer
     @size = size
   end
 
-  def draw
-    @surface = Cairo::SVGSurface.new("cube.svg", image_width, image_height)
+  def draw(filename)
+    @surface = Cairo::SVGSurface.new("tempsvg.svg", image_width, image_height)
     @cr = Cairo::Context.new(@surface)
     create_scene
     render
+    @cr.target.write_to_png(filename)
+    @cr.target.finish
   end
 
   private
@@ -29,8 +32,6 @@ class CubeRenderer
   def render
     render_top_stickers
     render_side_stickers
-    @cr.target.write_to_png("file.png")
-    @cr.target.finish
   end
 
   def render_top_stickers

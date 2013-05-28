@@ -100,6 +100,20 @@ EOF
     end
 
     it "does multiple turns for other cubes" do
+      Cube.new(3, "R B").to_s.must_equal <<EOF
+   RRR
+   UUF
+   UUF
+FLLFFDRRB
+ULLFFDRRD
+ULLFFDRRD
+   DDB
+   DDB
+   LLL
+   BBB
+   BBB
+   UUU
+EOF
       Cube.new(3, "R F").to_s.must_equal <<EOF
    UUF
    UUF
