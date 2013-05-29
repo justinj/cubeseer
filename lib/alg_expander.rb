@@ -8,14 +8,38 @@ class AlgExpander
 
   def split_alg(alg)
     alg = alg.gsub(/\s+/, "")
-    alg.each_char.slice_before { |char| face? char }.map(&:join)
+    alg.each_char.slice_before { |char| turn_starter? char }.map(&:join)
   end
 
-  def face?(char)
-    %w(U D L R F B).include? char
+  def turn_starter?(char)
+    %w(U D L R F B M E S).include? char
+  end
+
+  def slice?(char)
+    %w(M E S).include? char
   end
 
   def expand_move(move)
+    result = expand_turn(move)
+    result = result.collect_concat do |new_move|
+      if slice? new_move
+        expand_slice(new_move).collect_concat {|turn| expand_turn(turn)}
+      else
+        new_move
+      end
+    end
+    result
+  end
+
+  def expand_slice(slice)
+    {
+      "M" => ["Lw", "L'"],
+      "E" => ["Dw", "D'"],
+      "S" => ["Fw", "F'"]
+    }[slice]
+  end
+
+  def expand_turn(move)
     [face(move)] * 
     if prime_move? move
       3
@@ -27,7 +51,11 @@ class AlgExpander
   end
 
   def face(move)
-    move[0]
+    move.each_char.take_while { |char| !modifier? char }.join
+  end
+
+  def modifier?(char)
+    char == "'" || char == "2"
   end
 
   def prime_move?(move)

@@ -3,6 +3,7 @@ GEM
   specs:
     cairo (1.12.6)
       pkg-config
+    minitest (5.0.2)
     pkg-config (1.1.4)
     rack (1.5.2)
     rack-protection (1.5.0)
@@ -19,5 +20,6 @@ PLATFORMS
 
 DEPENDENCIES
   cairo
+  minitest
   rake
   sinatra

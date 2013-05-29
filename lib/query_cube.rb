@@ -5,7 +5,7 @@ class Cube
     def algorithm(size, alg)
       moves = AlgExpander.new.expand(alg)
       cube = new(size)
-      moves.each { |move| cube.do_move move.to_sym }
+      moves.each { |move| cube.do_move move }
       cube
     end
   end
@@ -31,27 +31,34 @@ class Cube
   end
 
   def do_move(move)
-    affected_sides = ADJACENTS[move]
+    move_face = move[0].to_sym
+    move_depth = turn_depth(move)
+    affected_sides = ADJACENTS[move_face]
     to_cycle = affected_sides.map { |face| sides[face] }
 
     # each face that is affected must be rotated so the stickers
     # that cycle are on top
-
     amount_to_rotate = affected_sides.map {|side| 
-      4 - ADJACENTS[side].find_index(move) }
+      4 - ADJACENTS[side].find_index(move_face) }
+
     to_cycle = rotate_each(to_cycle, amount_to_rotate)
 
-    cycle_top_row(to_cycle)
+    cycle_top(to_cycle, move_depth)
 
     # rotate back
     amount_to_rotate.map! { |x| 4 - x }
     to_cycle = rotate_each(to_cycle, amount_to_rotate)
 
+    # reassign the faces
     affected_sides.zip(to_cycle).each do |(side, face)|
       sides[side] = face
     end
 
-    sides[move] = rotate_face_clockwise(sides[move])
+    sides[move_face] = rotate_face_clockwise(sides[move_face])
+  end
+
+  def turn_depth(move)
+    move.end_with?("w") ? 1 : 0
   end
 
   def rotate_each(to_rotate, amounts)
@@ -60,12 +67,14 @@ class Cube
     end
   end
 
-  def cycle_top_row(faces)
-    buffer = faces.last[0]
-    faces.each_cons(2).reverse_each do |(from, to)|
-      to[0] = from[0]
+  def cycle_top(faces, depth)
+    0.upto(depth) do |i|
+      buffer = faces.last[i]
+      faces.each_cons(2).reverse_each do |(from, to)|
+        to[i] = from[i]
+      end
+      faces.first[i] = buffer
     end
-    faces.first[0] = buffer
   end
 
   CORNERS = [[0,0], [1,0], [1,1], [0,1]]
