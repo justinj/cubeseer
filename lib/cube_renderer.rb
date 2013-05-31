@@ -1,5 +1,5 @@
 require "fileutils"
-require "mini_magick"
+require "quick_magick"
 require_relative "query_cube"
 
 class CubeRenderer
@@ -14,13 +14,9 @@ class CubeRenderer
   end
 
   def draw(filename)
-    command = "convert -size #{image_width}x#{image_height} xc:white #{filename}"
-    p "&"*40
-    p command
-    `#{command}`
-    @image = MiniMagick::Image.open(filename)
+    @image = QuickMagick::Image.solid(image_width, image_height, :white)
     render
-    image.write(filename)
+    image.save filename
   end
 
   private
@@ -135,10 +131,8 @@ class CubeRenderer
   end
 
   def render_rect(x,y,w,h,col)
-    image.combine_options do |c|
-      c.fill col.to_s
-      c.draw "rectangle #{x},#{y} #{x + w},#{y + h}"
-    end
+    image.fill = col.to_s
+    image.draw_rectangle(x,y,x+w,y+h)
   end
 
   def outline_thickness
