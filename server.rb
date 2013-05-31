@@ -8,6 +8,7 @@ end
 
 get "/cube/:alg" do
   FileUtils.mkdir("tmp") unless Dir.exist?("tmp")
-  CubeRenderer.new(params[:alg]).draw("tmp/#{params[:alg]}.png")
-  send_file("tmp/#{params[:alg]}.png")
+  fname = params[:alg].gsub("'","PRIME")
+  CubeRenderer.new(params[:alg]).draw("tmp/#{fname}.png")
+  send_file("tmp/#{fname}.png")
 end
