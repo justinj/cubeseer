@@ -1,6 +1,5 @@
 require "fileutils"
 require "sinatra"
-require "cairo"
 require_relative "lib/cube_renderer"
 
 get "/" do
