@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "cairo"
 gem "sinatra"
+gem "mini_magick"
 gem "rake"
 gem "minitest"
