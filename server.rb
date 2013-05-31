@@ -8,7 +8,7 @@ get "/" do
 end
 
 get "/cube/:alg" do
-  FileUtils.mkdir("generated") unless Dir.exist?("generated")
-  CubeRenderer.new(params[:alg]).draw("generated/#{params[:alg]}.png")
-  send_file("generated/#{params[:alg]}.png")
+  FileUtils.mkdir("tmp") unless Dir.exist?("tmp")
+  CubeRenderer.new(params[:alg]).draw("tmp/#{params[:alg]}.png")
+  send_file("tmp/#{params[:alg]}.png")
 end
