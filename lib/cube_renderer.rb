@@ -1,3 +1,4 @@
+require "fileutils"
 require "cairo"
 require "mini_magick"
 require_relative "query_cube"
@@ -14,22 +15,16 @@ class CubeRenderer
   end
 
   def draw(filename)
-    `convert -size #{image_width}x#{image_height} xc:white #{filename}`
+    command = "convert -size #{image_width}x#{image_height} xc:white #{filename}"
+    p "&"*40
+    p command
+    `#{command}`
     @image = MiniMagick::Image.open(filename)
     render
     image.write(filename)
   end
 
   private
-
-  def create_scene
-    @cr.set_source_color(background_color)
-    @cr.paint
-  end
-
-  def background_color
-    :white
-  end
 
   def render
     render_top_stickers
@@ -172,11 +167,11 @@ class CubeRenderer
   end
 
   def image_height
-    height * 1.2
+    (height * 1.2).floor
   end
 
   def image_width
-    width * 1.2
+    (width * 1.2).floor
   end
 
   def cubie_height
