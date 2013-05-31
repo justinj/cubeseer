@@ -1,21 +1,23 @@
 require "cairo"
+require "mini_magick"
 require_relative "query_cube"
 
 class CubeRenderer
   attr_reader :cube, :size
 
+  attr_accessor :image
+
   def initialize(alg, size = 3)
     @cube = Cube.algorithm(size, alg)
     @size = size
+    @image = nil
   end
 
   def draw(filename)
-    @surface = Cairo::SVGSurface.new("tempsvg.svg", image_width, image_height)
-    @cr = Cairo::Context.new(@surface)
-    create_scene
+    `convert -size #{image_width}x#{image_height} xc:white #{filename}`
+    @image = MiniMagick::Image.open(filename)
     render
-    @cr.target.write_to_png(filename)
-    @cr.target.finish
+    image.write(filename)
   end
 
   private
@@ -131,13 +133,22 @@ class CubeRenderer
   end
 
   def render_sticker(args)
-    @cr.rectangle(args[:x], args[:y], args[:w], args[:h])
-    @cr.set_source_color(args[:color])
-    @cr.fill
+    render_rect(args[:x] - outline_thickness, 
+                args[:y] - outline_thickness, 
+                args[:w] + outline_thickness * 2, 
+                args[:h] + outline_thickness * 2, outline_color)
+    render_rect(args[:x], args[:y], args[:w], args[:h], args[:color])
+  end
 
-    @cr.rectangle(args[:x], args[:y], args[:w], args[:h])
-    @cr.set_source_color(outline_color)
-    @cr.stroke
+  def render_rect(x,y,w,h,col)
+    image.combine_options do |c|
+      c.fill col.to_s
+      c.draw "rectangle #{x},#{y} #{x + w},#{y + h}"
+    end
+  end
+
+  def outline_thickness
+    1
   end
 
   def outline_color
