@@ -1,5 +1,4 @@
 require "fileutils"
-require "cairo"
 require "mini_magick"
 require_relative "query_cube"
 
