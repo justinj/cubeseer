@@ -11,9 +11,9 @@ get "/cube" do
     HeiseExpander.new.expand(params["heise"])
   end
 
-  size = params["size"].to_i || 3
+  size = (params["size"] || 3).to_i
 
-  size = 3 if size > 10
+  size = 10 if size > 10
   size = 1 if size < 1
 
   FileUtils.mkdir("tmp") unless Dir.exist?("tmp")
