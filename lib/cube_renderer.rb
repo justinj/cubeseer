@@ -51,13 +51,13 @@ class CubeRenderer
 
   def render_horizontal(stickers, y)
     stickers.zip(sticker_positions).each do |(face, x)|
-      render_sticker(x, y, cubie_width - side_squishedness * 2, side_thickness, sticker_to_color(face))
+      render_sticker(x + side_squishedness, y, cubie_width - side_squishedness * 2, side_thickness, sticker_to_color(face))
     end
   end
 
   def render_vertical(stickers, x)
     stickers.zip(sticker_positions).each do |(face, y)|
-      render_sticker(x, y, side_thickness, cubie_height - side_squishedness * 2, sticker_to_color(face))
+      render_sticker(x, y + side_squishedness, side_thickness, cubie_height - side_squishedness * 2, sticker_to_color(face))
     end
   end
 
