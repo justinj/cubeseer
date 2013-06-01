@@ -2,8 +2,8 @@ require_relative "../lib/heise_expander.rb"
 
 class HeiseExpanderTest < Minitest::Test
   def assert_expands_to(expected, moves)
-    assert_equal HeiseExpander.new.expand(moves),
-      expected
+    assert_equal expected,
+                 HeiseExpander.new.expand(moves)
   end
 
   def test_nothing
@@ -13,6 +13,7 @@ class HeiseExpanderTest < Minitest::Test
   def test_single_move
     assert_expands_to "R", "i"
     assert_expands_to "R'", "k"
+    assert_expands_to "Rw'", "u"
   end
 
   def test_multiple_moves
