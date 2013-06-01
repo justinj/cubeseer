@@ -14,6 +14,7 @@ get "/cube" do
   size = params["size"].to_i || 3
 
   size = 3 if size > 10
+  size = 1 if size < 1
 
   FileUtils.mkdir("tmp") unless Dir.exist?("tmp")
   scramble_filename = scramble.gsub("'","PRIME")
