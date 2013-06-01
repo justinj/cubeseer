@@ -4,15 +4,16 @@ require 'digest/sha1'
 require_relative "../lib/heise_expander"
 require_relative "../lib/cube_renderer"
 
-get "/cube/:alg" do
-  make_for_scramble(params[:alg])
+get "/cube" do
+  scramble = if params.has_key? "alg"
+    params["alg"]
+  elsif params.has_key? "heise"
+    HeiseExpander.new.expand(params["heise"])
+  end
+  create_image_for scramble
 end
 
-get "/heise/:alg" do
-  make_for_scramble(HeiseExpander.new.expand(params[:alg]))
-end
-
-def make_for_scramble(scramble)
+def create_image_for(scramble)
   FileUtils.mkdir("tmp") unless Dir.exist?("tmp")
   scramble_filename = scramble.gsub("'","PRIME")
   fname = Digest::SHA1.hexdigest(scramble_filename)
