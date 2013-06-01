@@ -1,6 +1,6 @@
 require "fileutils"
 require "quick_magick"
-require_relative "query_cube"
+require_relative "cube"
 
 class CubeRenderer
   attr_reader :cube, :size

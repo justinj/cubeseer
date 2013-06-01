@@ -1,4 +1,4 @@
-require_relative "../lib/query_cube"
+require_relative "../lib/cube"
 
 class QueryTest < Minitest::Test
   def assert_query query, expected, message=nil

@@ -1,6 +1,6 @@
 require "minitest/autorun"
 
-require_relative "../lib/query_cube"
+require_relative "../lib/cube"
 
 class QueryTest < MiniTest::Test
   def cube
