@@ -10,15 +10,16 @@ get "/cube" do
   elsif params.has_key? "heise"
     HeiseExpander.new.expand(params["heise"])
   end
-  create_image_for scramble
-end
 
-def create_image_for(scramble)
+  size = params["size"].to_i || 3
+
+  size = 3 if size > 10
+
   FileUtils.mkdir("tmp") unless Dir.exist?("tmp")
   scramble_filename = scramble.gsub("'","PRIME")
   fname = Digest::SHA1.hexdigest(scramble_filename)
   unless File.exist? fname
-    CubeRenderer.new(scramble).draw("tmp/#{fname}.png")
+    CubeRenderer.new(scramble, size).draw("tmp/#{fname}.png")
   end
   send_file("tmp/#{fname}.png")
 end
