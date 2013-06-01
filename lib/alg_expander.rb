@@ -12,7 +12,7 @@ class AlgExpander
   end
 
   def turn_starter?(char)
-    %w(U D L R F B M E S).include? char
+    %w(U D L R F B M E S x y z).include? char
   end
 
   def slice?(char)
@@ -33,9 +33,9 @@ class AlgExpander
 
   def expand_slice(slice)
     {
-      "M" => ["Lw", "L'"],
-      "E" => ["Dw", "D'"],
-      "S" => ["Fw", "F'"]
+      "M" => ["R", "L'", "x'"],
+      "E" => ["U", "D'", "y'"],
+      "S" => ["B", "F'", "z"]
     }[slice]
   end
 

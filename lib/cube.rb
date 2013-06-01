@@ -40,18 +40,38 @@ class Cube
   end
 
   def do_move(move)
-    move_face = move[0].to_sym
+    move_face = turn_face(move)
     move_depth = turn_depth(move)
 
     do_move_around_sides(move_face, move_depth)
     do_move_face(move_face)
   end
 
+  def turn_face(move)
+    rotation_face(move) || move[0].to_sym
+  end
+
+  def rotation_face(move)
+    {:x => :R, :y => :U, :z => :F}[move.to_sym]
+  end
+
+  def turn_depth(move)
+    if rotation? move
+      size - 1
+    else
+      move.end_with?("w") ? 1 : 0
+    end
+  end
+
+  def rotation?(move)
+    %(x y z).include? move
+  end
+
   def do_move_around_sides(move_face, depth)
     affected_sides = ADJACENTS[move_face]
 
     # each face that is affected must be rotated so the stickers
-    # that cycle are on top
+    # that cyce
     amount_to_rotate = affected_sides.map {|side| 
       4 - ADJACENTS[side].find_index(move_face) }
 
@@ -66,10 +86,6 @@ class Cube
 
   def do_move_face(move_face)
     sides[move_face] = rotate_face_clockwise(sides[move_face])
-  end
-
-  def turn_depth(move)
-    move.end_with?("w") ? 1 : 0
   end
 
   def rotate_sides(to_rotate, amounts)

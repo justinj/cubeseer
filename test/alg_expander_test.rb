@@ -15,16 +15,21 @@ class AlgExpanderTest < Minitest::Test
     assert_equal ["Rw"], @expander.expand("Rw")
   end
 
+  def test_keep_single_moves_same
+    assert_equal ["x", "y", "z"], @expander.expand("x y z")
+  end
+
   def test_handles_wide_turns_with_modifiers
     assert_equal ["Rw", "Rw"], @expander.expand("Rw2")
   end
 
   def test_expands_slices
-    assert_equal ["Lw", "L", "L", "L", "Lw", "L", "L", "L"], @expander.expand("M2")
+    assert_equal ["R", "L", "L", "L", "x", "x", "x", "R", "L", "L", "L", "x", "x", "x"], 
+      @expander.expand("M2")
   end
 
   def test_converts_slices_to_wides
-    assert_equal ["Lw", "L", "L", "L"], @expander.expand("M")
+    assert_equal ["R", "L", "L", "L", "x", "x", "x"], @expander.expand("M")
   end
 
   def test_expand_double_moves_to_two_single

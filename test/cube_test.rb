@@ -28,6 +28,11 @@ class TestNonStandardMoves < MiniTest::Test
                   [:U, :B, :U],
                   [:U, :B, :U],
                   [:U, :B, :U]]
+    assert_equal Cube.algorithm(4, "M")["UBL:UFR"], [
+                  [:U, :B, :B, :U],
+                  [:U, :B, :B, :U],
+                  [:U, :B, :B, :U],
+                  [:U, :B, :B, :U]]
     assert_equal Cube.algorithm(3, "M2")["UBL:UFR"], [
                   [:U, :D, :U],
                   [:U, :D, :U],
@@ -47,5 +52,13 @@ class TestNonStandardMoves < MiniTest::Test
                   [:F, :F, :F],
                   [:F, :F, :F],
                   [:F, :F, :F]]
+    assert_equal Cube.algorithm(3, "y")["UBL:UFR"], [
+                  [:U, :U, :U],
+                  [:U, :U, :U],
+                  [:U, :U, :U]]
+    assert_equal Cube.algorithm(3, "z")["UBL:UFR"], [
+                  [:L, :L, :L],
+                  [:L, :L, :L],
+                  [:L, :L, :L]]
   end
 end
