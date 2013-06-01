@@ -23,37 +23,41 @@ class CubeRenderer
 
   def render
     render_top_stickers
-    render_side_stickers
+    render_around
   end
 
   def render_top_stickers
     rows = cube["UBL:UFR"]
     0.upto(size - 1) do |x|
       0.upto(size - 1) do |y|
-      color = sticker_to_color rows[y][x]
-      render_sticker(x: x * cubie_width + x_offset,
-                     y: y * cubie_height + y_offset,
-                     w: cubie_width,
-                     h: cubie_height,
-                     color: color)
+        color = sticker_to_color rows[y][x]
+        render_sticker(x * cubie_width + offset, y * cubie_height + offset, cubie_width, cubie_height, color)
       end
     end
   end
 
-  def render_side_stickers
-    rows = {
-      bottom: cube["FUL:FRU"][0],
-      top: cube["BUR:BLU"][0].reverse,
-      right: cube["RUF:RBU"][0].reverse,
-      left: cube["LUB:LFU"][0]
-    }
+  def render_around
+    render_horizontal(cube["FUL:FRU"][0]        , offset + height + side_distance)
+    render_horizontal(cube["BUR:BLU"][0].reverse, offset - side_thickness - side_distance)
+    render_vertical(  cube["RUF:RBU"][0].reverse, offset + width + side_distance)
+    render_vertical(  cube["LUB:LFU"][0]        , offset - side_thickness - side_distance)
+  end
+  
+  def sticker_positions
+    (0...size).map do |i| 
+      offset + cubie_width * i + side_squishedness
+    end
+  end
 
-    rows.each do |(position, stickers)|
-      colors = stickers.map { |side| sticker_to_color(side) }
-      p colors
-      colors.each_with_index do |color,i|
-        render_side(i, position, color)
-      end
+  def render_horizontal(stickers, y)
+    stickers.zip(sticker_positions).each do |(face, x)|
+      render_sticker(x, y, cubie_width - side_squishedness * 2, side_thickness, sticker_to_color(face))
+    end
+  end
+
+  def render_vertical(stickers, x)
+    stickers.zip(sticker_positions).each do |(face, y)|
+      render_sticker(x, y, side_thickness, cubie_height - side_squishedness * 2, sticker_to_color(face))
     end
   end
 
@@ -68,48 +72,6 @@ class CubeRenderer
     }[sticker]
   end
 
-  def render_side(index, side, color)
-    x = x_offset + 
-      case side
-        when :left
-          -(side_distance + side_thickness)
-        when :right
-          height + side_distance
-        else
-          index * cubie_width + side_squishedness
-        end
-
-    y = y_offset + 
-      case side
-        when :top
-          -(side_distance + side_thickness)
-        when :bottom
-          height + side_distance
-        else
-          index * cubie_height + side_squishedness
-        end
-
-    h = case side
-        when :left, :right
-          cubie_height - side_squishedness * 2
-        else
-          side_thickness
-        end
-
-    w = case side
-        when :top, :bottom
-          cubie_width - side_squishedness * 2
-        else
-          side_thickness
-        end
-
-    render_sticker(x: x,
-                   y: y, 
-                   w: w,
-                   h: h,
-                   color: color)
-  end
-
   def side_distance
     5
   end
@@ -122,12 +84,12 @@ class CubeRenderer
     10
   end
 
-  def render_sticker(args)
-    render_rect(args[:x] - outline_thickness, 
-                args[:y] - outline_thickness, 
-                args[:w] + outline_thickness * 2, 
-                args[:h] + outline_thickness * 2, outline_color)
-    render_rect(args[:x], args[:y], args[:w], args[:h], args[:color])
+  def render_sticker(x, y, w, h, color)
+    render_rect(x - outline_thickness, 
+                y - outline_thickness, 
+                w + outline_thickness * 2, 
+                h + outline_thickness * 2, outline_color)
+    render_rect(x, y, w, h, color)
   end
 
   def render_rect(x,y,w,h,col)
@@ -143,12 +105,8 @@ class CubeRenderer
     :black
   end
 
-  def y_offset
+  def offset
     (image_height - height)/2
-  end
-
-  def x_offset
-    (image_width - width)/2
   end
 
   def width
@@ -174,5 +132,4 @@ class CubeRenderer
   def cubie_width
     width / size
   end
-
 end
