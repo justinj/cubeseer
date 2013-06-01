@@ -1,11 +1,7 @@
 require "fileutils"
 require "sinatra"
 require 'digest/sha1'
-require_relative "lib/cube_renderer"
-
-get "/" do
-  %(<a href="/cube/RUR'">pew</a>)
-end
+require_relative "../lib/cube_renderer"
 
 get "/cube/:alg" do
   FileUtils.mkdir("tmp") unless Dir.exist?("tmp")

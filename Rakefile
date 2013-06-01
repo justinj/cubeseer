@@ -6,5 +6,5 @@ Rake::TestTask.new do |t|
 end
 
 task :default do
-  `ruby server.rb`
+  `ruby server/server.rb`
 end
