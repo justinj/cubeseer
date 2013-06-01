@@ -41,4 +41,11 @@ class TestNonStandardMoves < MiniTest::Test
                   [:U, :U, :U],
                   [:U, :U, :U]]
   end
+  
+  def test_rotations
+    assert_equal Cube.algorithm(3, "x")["UBL:UFR"], [
+                  [:F, :F, :F],
+                  [:F, :F, :F],
+                  [:F, :F, :F]]
+  end
 end

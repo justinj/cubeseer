@@ -31,7 +31,7 @@ class CubeRenderer
     0.upto(size - 1) do |x|
       0.upto(size - 1) do |y|
         color = sticker_to_color rows[y][x]
-        render_sticker(x * cubie_width + offset, y * cubie_height + offset, cubie_width, cubie_height, color)
+        render_sticker(x * cubie_width + offset + 1, y * cubie_height + offset + 1, cubie_width, cubie_height, color)
       end
     end
   end
@@ -73,23 +73,23 @@ class CubeRenderer
   end
 
   def side_distance
-    5
+    3
   end
 
   def side_squishedness
-    5
+    1
   end
 
   def side_thickness
-    10
+    15
   end
 
   def render_sticker(x, y, w, h, color)
-    render_rect(x - outline_thickness, 
-                y - outline_thickness, 
-                w + outline_thickness * 2, 
-                h + outline_thickness * 2, outline_color)
-    render_rect(x, y, w, h, color)
+    render_rect(x, y, w, h, outline_color)
+    render_rect(x + outline_thickness, 
+                y + outline_thickness, 
+                w - outline_thickness * 2, 
+                h - outline_thickness * 2, color)
   end
 
   def render_rect(x,y,w,h,col)
@@ -126,10 +126,10 @@ class CubeRenderer
   end
 
   def cubie_height
-    height / size
+    (height / size).floor
   end
 
   def cubie_width
-    width / size
+    (width / size).floor
   end
 end
