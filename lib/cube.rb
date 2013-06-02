@@ -42,9 +42,11 @@ class Cube
   def do_move(move)
     move_face = turn_face(move)
     move_depth = turn_depth(move)
+    is_rotation = move_depth == size - 1
 
     do_move_around_sides(move_face, move_depth)
     do_move_face(move_face)
+    3.times { do_move_face(opposite_face(move_face)) } if is_rotation
   end
 
   def turn_face(move)
@@ -86,6 +88,10 @@ class Cube
 
   def do_move_face(move_face)
     sides[move_face] = rotate_face_clockwise(sides[move_face])
+  end
+
+  def opposite_face(face)
+    { U: :D, D: :U, L: :R, R: :L, F: :B, B: :F }[face]
   end
 
   def rotate_sides(to_rotate, amounts)

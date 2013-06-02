@@ -6,7 +6,7 @@ class ColorScheme
 
   class << self
     def from_string(cols)
-      raise "must have 6 colors" unless cols.length == 6
+      raise "color scheme must have 6 colors, received #{cols}" unless cols.length == 6
       overrides = cols.each_char.zip(FACES).each_with_object({}) do |(letter, face), hsh|
         hsh[face] = letter_to_color(letter)
       end
@@ -24,6 +24,7 @@ class ColorScheme
       "b" => :blue,
       "x" => :gray
     }
+
     def letter_to_color(letter)
       COLOURS[letter]
     end

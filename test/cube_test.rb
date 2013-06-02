@@ -61,4 +61,9 @@ class TestNonStandardMoves < MiniTest::Test
                   [:L, :L, :L],
                   [:L, :L, :L]]
   end
+
+  def test_move_with_rotation
+    assert_equal Cube.algorithm(3, "U z")["BUR:BLU"], 
+                 [[:L, :B, :B]]
+  end
 end
