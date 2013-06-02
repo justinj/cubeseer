@@ -26,6 +26,10 @@ class Cube
     }
   end
 
+  def solved_face(side)
+    [[side] * size] * size
+  end
+
   def query(q)
     pieces = q.split(":").map { |piece| faces(piece) }
     raise "query includes multiple faces" if pieces[0][0] != pieces[1][0]
@@ -35,22 +39,21 @@ class Cube
   end
   alias_method :"[]", :query
 
-  def solved_face(side)
-    [[side] * size] * size
-  end
-
   def do_move(move)
     move_face = turn_face(move)
     move_depth = turn_depth(move)
-    is_rotation = move_depth == size - 1
 
     do_move_around_sides(move_face, move_depth)
     do_move_face(move_face)
-    3.times { do_move_face(opposite_face(move_face)) } if is_rotation
+    3.times { do_move_face(opposite_face(move_face)) } if rotation? move
   end
 
   def turn_face(move)
-    rotation_face(move) || move[0].to_sym
+    if rotation? move
+      rotation_face(move)
+    else
+      move[0].to_sym
+    end
   end
 
   def rotation_face(move)
@@ -59,9 +62,9 @@ class Cube
 
   def turn_depth(move)
     if rotation? move
-      size - 1
+      size
     else
-      move.end_with?("w") ? 1 : 0
+      move.end_with?("w") ? 2 : 1
     end
   end
 
@@ -73,7 +76,7 @@ class Cube
     affected_sides = ADJACENTS[move_face]
 
     # each face that is affected must be rotated so the stickers
-    # that cyce
+    # that cycle are on top
     amount_to_rotate = affected_sides.map {|side| 
       4 - ADJACENTS[side].find_index(move_face) }
 
@@ -102,7 +105,7 @@ class Cube
 
   def cycle_top(face_names, depth)
     faces = face_names.map { |face| sides[face] }
-    0.upto(depth) do |i|
+    0.upto(depth - 1) do |i|
       buffer = faces.last[i]
       faces.each_cons(2).reverse_each do |(from, to)|
         to[i] = from[i]
