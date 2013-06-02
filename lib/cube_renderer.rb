@@ -97,7 +97,7 @@ class CubeRenderer
 
   def render_rect(x,y,w,h,col)
     image.fill = col.to_s
-    image.draw_rectangle(x,y,x+w,y+h)
+    image.draw_rectangle(x,y, x + w, y + h)
   end
 
   def outline_thickness
