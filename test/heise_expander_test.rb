@@ -13,7 +13,7 @@ class HeiseExpanderTest < Minitest::Test
   def test_single_move
     assert_expands_to "R", "i"
     assert_expands_to "R'", "k"
-    assert_expands_to "Rw'", "u"
+    assert_expands_to "Rw", "u"
   end
 
   def test_multiple_moves
