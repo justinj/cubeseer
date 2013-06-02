@@ -10,10 +10,10 @@ class CubeRenderer
 
   def initialize(alg, opts = {})
     opts = defaults.merge(opts) { |key, old, newval| newval || old }
-    @cube = Cube.algorithm(opts[:size], alg)
     @size = opts[:size]
     @scheme = ColorScheme.from_string(opts[:colors])
-    @image = nil
+
+    @cube = Cube.algorithm(size, alg)
   end
 
   def defaults
@@ -24,7 +24,7 @@ class CubeRenderer
   end
 
   def draw(filename)
-    @image = QuickMagick::Image.solid(image_width, image_height, :white)
+    @image = QuickMagick::Image.solid(image_width, image_height, :transparent)
     render
     image.save filename
   end
