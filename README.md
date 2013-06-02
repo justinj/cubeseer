@@ -43,3 +43,22 @@ On a solved cube this will be
  [:U, :U, :U],
  [:U, :U, :U]]   
 ```
+
+Server
+------
+
+There is a sinatra server that serves images of cubes in the server/server.rb file.
+
+It currently takes the following options:
+
+* alg - An algorithm to perform on a solved cube
+* heise - An algorithm, in heise sim notation, to perform on a solved cube
+* size - The size of the cube to show
+* colors - The colors, in U R F D L F order, to have on the cube. The following colors are supported:
+  * w => :white
+  * r => :red
+  * g => :green
+  * o => :orange
+  * y => :yellow
+  * b => :blue
+  * x => :gray
