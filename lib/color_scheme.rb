@@ -1,15 +1,46 @@
-require "minitest/autorun"
-
 class ColorScheme
-  def [](face)
-    "white"
+  attr_reader :options
+  def initialize(overrides = {})
+    @options = defaults.merge(overrides)
   end
-end
 
-class ColorSchemeTest < Minitest::Test
-  def test_returns_colors
-    color_scheme = ColorScheme.new
-    assert_equal color_scheme[:U],
-                 "white"
+  class << self
+    def from_string(cols)
+      raise "must have 6 colors" unless cols.length == 6
+      overrides = cols.each_char.zip(FACES).each_with_object({}) do |(letter, face), hsh|
+        hsh[face] = letter_to_color(letter)
+      end
+      new(overrides)
+    end
+
+    FACES = %i(U R F D L B)
+
+    COLOURS = {
+      "w" => :white,
+      "r" => :red,
+      "g" => :green,
+      "o" => :orange,
+      "y" => :yellow,
+      "b" => :blue,
+      "x" => :gray
+    }
+    def letter_to_color(letter)
+      COLOURS[letter]
+    end
+  end
+
+  def [](face)
+    options[face]
+  end
+
+  def defaults
+    {
+      U: :white,
+      F: :green,
+      R: :red,
+      L: :orange,
+      D: :yellow,
+      B: :blue
+    }
   end
 end

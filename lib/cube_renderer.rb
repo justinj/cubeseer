@@ -1,16 +1,26 @@
 require "fileutils"
 require "quick_magick"
 require_relative "cube"
+require_relative "color_scheme"
 
 class CubeRenderer
-  attr_reader :cube, :size
+  attr_reader :cube, :size, :scheme
 
   attr_accessor :image
 
-  def initialize(alg, size = 3)
-    @cube = Cube.algorithm(size, alg)
-    @size = size
+  def initialize(alg, opts = {})
+    opts = defaults.merge(opts) { |key, old, newval| newval || old }
+    @cube = Cube.algorithm(opts[:size], alg)
+    @size = opts[:size]
+    @scheme = ColorScheme.from_string(opts[:colors])
     @image = nil
+  end
+
+  def defaults
+    {
+      :size => 3,
+      :colors => "wrgyob"
+    }
   end
 
   def draw(filename)
@@ -62,14 +72,7 @@ class CubeRenderer
   end
 
   def sticker_to_color(sticker)
-    {
-      U: :white,
-      F: :green,
-      R: :red,
-      L: :orange,
-      D: :yellow,
-      B: :blue
-    }[sticker]
+    scheme[sticker]  
   end
 
   def side_distance

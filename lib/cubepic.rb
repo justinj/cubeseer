@@ -2,4 +2,4 @@
 
 require_relative "cube_renderer"
 
-CubeRenderer.new("x y z").draw("result.png")
+CubeRenderer.new("F R U R' U' F'", :colors => "yxxxxx").draw("result.png")
