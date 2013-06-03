@@ -15,6 +15,10 @@ class AlgExpanderTest < Minitest::Test
     assert_equal ["Rw"], @expander.expand("Rw")
   end
 
+  def test_handles_double_primes
+    assert_equal ["R", "R"], @expander.expand("R2'")
+  end
+
   def test_keep_single_moves_same
     assert_equal ["x", "y", "z"], @expander.expand("x y z")
   end

@@ -41,10 +41,10 @@ class AlgExpander
 
   def expand_turn(move)
     [face(move)] * 
-    if prime_move? move
-      3
-    elsif double_move? move
+    if double_move? move      
       2
+    elsif prime_move? move
+      3
     else
       1
     end
@@ -63,7 +63,7 @@ class AlgExpander
   end
 
   def double_move?(move)
-    move.end_with?("2")
+    move.end_with?("2", "2'")
   end
 
 end
