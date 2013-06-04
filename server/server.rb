@@ -8,7 +8,7 @@ get "/cube" do
   scramble = if params.has_key? "alg"
     params["alg"]
   elsif params.has_key? "heise"
-    HeiseExpander.new.expand(params["heise"])
+    CubeSeer::HeiseExpander.new.expand(params["heise"])
   end
 
   opts = {}
@@ -23,7 +23,7 @@ get "/cube" do
   scramble_filename = opts.to_s + scramble.gsub("'","PRIME")
   fname = Digest::SHA1.hexdigest(scramble_filename)
   unless File.exist? fname
-    CubeRenderer.new(scramble, opts).draw("tmp/#{fname}.png")
+    CubeSeer::CubeRenderer.new(scramble, opts).draw("tmp/#{fname}.png")
   end
   send_file("tmp/#{fname}.png")
 end
