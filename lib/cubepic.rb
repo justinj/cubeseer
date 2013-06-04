@@ -3,5 +3,5 @@
 require_relative "cube_renderer"
 
 module CubeSeer
-  CubeRenderer.new("F R U R' U' F'", :colors => "yxxxxx").draw("result.png")
+  CubeRenderer.new(:alg => "F R U R' U' F'", :colors => "yxxxxx").draw("result.png")
 end

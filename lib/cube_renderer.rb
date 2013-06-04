@@ -9,16 +9,23 @@ module CubeSeer
 
     attr_accessor :image
 
-    def initialize(alg, opts = {})
-      opts = defaults.merge(opts) { |key, old, newval| newval || old }
-      @size = opts[:size]
-      @scheme = ColorScheme.from_string(opts[:colors])
+    MIN_CUBE_SIZE = 1
+    MAX_CUBE_SIZE = 10
 
-      @cube = Cube.algorithm(size, alg)
+    def initialize(opts = {})
+      opts = defaults.merge(opts) { |key, old, newval| newval || old }
+      @size = clamp(opts[:size], MIN_CUBE_SIZE, MAX_CUBE_SIZE)
+      @scheme = ColorScheme.from_string(opts[:colors])
+      @cube = Cube.algorithm(size, opts[:alg])
+    end
+
+    def clamp(val, lower, upper)
+      [[val, lower].max, upper].min
     end
 
     def defaults
       {
+        :alg => "",
         :size => 3,
         :colors => "wrgyob"
       }
