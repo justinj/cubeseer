@@ -7,6 +7,21 @@ similar to [VisualCube](http://cube.crider.co.uk/visualcube.php).
 Right now only a top view is possible,
 which works well for PLL diagrams.
 
+Examples
+--------
+
+[Sexy Move!](http://cubeseer.herokuapp.com/cube?alg=RUR'U')
+
+[It works great for PLLs](http://cubeseer.herokuapp.com/cube?case=RUR'U'R'FR2U'R'U'RUR'F')
+
+[If you're used to virtual cubes, you can supply an alg that way too](http://cubeseer.herokuapp.com/cube?heise=kjejjifdkjejjifd)
+
+[Different sized cubes are also possible](http://cubeseer.herokuapp.com/cube?size=4&alg=RwU2xRwU2RwU2Rw'U2LwU2Rw'U2RwU2Rw'U2Rw')
+
+[Changing the colour scheme](http://cubeseer.herokuapp.com/cube?colors=wrgboy&heisecase=kufkufkufkuffkufkufkufku)
+
+[Ignoring stickers lets you create OLL diagrams as well](http://cubeseer.herokuapp.com/cube?colors=yxxxxx&heisecase=hkhiifkfijkgg)
+
 Possible Eventual Features
 --------------------------
 
@@ -54,7 +69,7 @@ It currently takes the following options:
 * heise - An algorithm, in heise sim notation, to perform on a solved cube
 * heisecase - An algorithm, in heise sim notation, that should solve the image presented
 * size - The size of the cube to show
-* colors - The colors, in U R F D L F order, to have on the cube. The following colors are supported:
+* colors - The colors, in U R F D L B order, to have on the cube. The following colors are supported:
   * w => :white
   * r => :red
   * g => :green
