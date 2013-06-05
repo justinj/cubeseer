@@ -50,7 +50,9 @@ There is a sinatra server that serves images of cubes in the server/server.rb fi
 It currently takes the following options:
 
 * alg - An algorithm to perform on a solved cube
+* case - An algorithm that should _solve_ the image presented
 * heise - An algorithm, in heise sim notation, to perform on a solved cube
+* heisecase - An algorithm, in heise sim notation, that should solve the image presented
 * size - The size of the cube to show
 * colors - The colors, in U R F D L F order, to have on the cube. The following colors are supported:
   * w => :white
