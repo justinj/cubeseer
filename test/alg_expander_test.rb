@@ -1,5 +1,3 @@
-require "minitest/autorun"
-
 require_relative "../lib/alg_expander"
 
 module CubeSeer

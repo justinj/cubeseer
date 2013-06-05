@@ -1,5 +1,3 @@
-require "minitest/autorun"
-
 module CubeSeer
   class Algorithm
     include Enumerable

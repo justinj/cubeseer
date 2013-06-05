@@ -2,6 +2,7 @@ require "fileutils"
 require "sinatra"
 require 'digest/sha1'
 require_relative "../lib/heise_expander"
+require_relative "../lib/alg_inverter"
 require_relative "../lib/cube_renderer"
 
 get "/cube" do
@@ -9,15 +10,20 @@ get "/cube" do
   opts = {}
   opts[:alg] = scramble
   opts[:colors] = params["colors"]
-  opts[:size] = params["size"].to_i
+  opts[:size] = params["size"].to_i if params.has_key? "size"
   create_image(opts)
 end
 
 def get_scramble(params)
   if params.has_key? "alg"
     params["alg"]
+  elsif params.has_key? "case"
+    CubeSeer::AlgInverter.new.invert(params["case"])
   elsif params.has_key? "heise"
     CubeSeer::HeiseExpander.new.expand(params["heise"])
+  elsif params.has_key? "heisecase"
+    alg = CubeSeer::HeiseExpander.new.expand(params["heisecase"])
+    CubeSeer::AlgInverter.new.invert(alg)
   end
 end
 
