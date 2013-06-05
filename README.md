@@ -33,6 +33,7 @@ Possible Eventual Features
 
 * Cube representing
   * Create by explicitly setting each sticker
+  * Deeper than two levels for moves is not possible, need to implement a more general notation, like SiGN
 
 Cube Representation
 -------------------
