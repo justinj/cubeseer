@@ -10,6 +10,8 @@ which works well for PLL diagrams.
 Examples
 --------
 
+Check the URL bar to see how each diagram was created
+
 [Sexy Move!](http://cubeseer.herokuapp.com/cube?alg=RUR'U')
 
 [It works great for PLLs](http://cubeseer.herokuapp.com/cube?case=RUR'U'R'FR2U'R'U'RUR'F')
