@@ -11,12 +11,10 @@ Possible Eventual Features
 --------------------------
 
 * Cube rendering
-  * Ignoring certain stickers (gray)
   * 3D view
   * Rounded side stickers, like VisualCube has
 
 * Cube representing
-  * Create from a case rather than an alg (just invert the alg first)
   * Create by explicitly setting each sticker
 
 Cube Representation
