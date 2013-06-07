@@ -42,14 +42,14 @@ module CubeSeer
         [:U, :U, :U],
         [:U, :U, :U],
         [:U, :U, :U]]   
-        assert_query "FUL:FDR", [
-          [:R, :R, :R],
-          [:F, :F, :F],
-          [:F, :F, :F]]   
-          assert_query "FRU:FLD", [
-            [:R, :F, :F],
-            [:R, :F, :F],
-            [:R, :F, :F]]   
+      assert_query "FUL:FDR", [
+        [:R, :R, :R],
+        [:F, :F, :F],
+        [:F, :F, :F]]   
+      assert_query "FRU:FLD", [
+        [:R, :F, :F],
+        [:R, :F, :F],
+        [:R, :F, :F]]   
     end
   end
 
@@ -89,10 +89,10 @@ module CubeSeer
         [:U, :U, :U],
         [:U, :U, :U],
         [:U, :U, :U]]   
-        assert_query "FUL:FDR", [
-          [:L, :L, :L],
-          [:F, :F, :F],
-          [:F, :F, :F]]   
+      assert_query "FUL:FDR", [
+        [:L, :L, :L],
+        [:F, :F, :F],
+        [:F, :F, :F]]   
     end
   end
 end
