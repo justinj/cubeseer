@@ -119,12 +119,12 @@ module CubeSeer
 
     # the adjacent faces in the order they match up with the corners
     ADJACENTS = {
-      U: %i(B R F L),
-      D: %i(F R B L),
-      L: %i(U F D B),
-      R: %i(U B D F),
-      F: %i(U R D L),
-      B: %i(U L D R)
+      U: %w(B R F L).map(&:to_sym),
+      D: %w(F R B L).map(&:to_sym),
+      L: %w(U F D B).map(&:to_sym),
+      R: %w(U B D F).map(&:to_sym),
+      F: %w(U R D L).map(&:to_sym),
+      B: %w(U L D R).map(&:to_sym)
     }
 
     def box_from(top_left, bottom_right, face)

@@ -14,7 +14,7 @@ module CubeSeer
         new(overrides)
       end
 
-      FACES = %i(U R F D L B)
+      FACES = %w(U R F D L B).map(&:to_sym)
 
       COLOURS = {
         "w" => :white,
