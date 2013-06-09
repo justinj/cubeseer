@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative "cube_renderer"
+# TODO: Make this a real CLI
+
+$:.unshift File.join(File.dirname(__FILE__), *%w{ .. lib })
+require "cubeseer"
 
 module CubeSeer
   CubeRenderer.new(:alg => "F R U R' U' F'", :colors => "yxxxxx").draw("result.png")

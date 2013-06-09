@@ -24,8 +24,8 @@ Check the URL bar to see how each diagram was created
 
 [Ignoring stickers lets you create OLL diagrams as well](http://cubeseer.herokuapp.com/cube?colors=yxxxxx&heisecase=hkhiifkfijkgg)
 
-Possible Eventual Features
---------------------------
+TODO
+----
 
 * Cube rendering
   * 3D view
@@ -34,6 +34,8 @@ Possible Eventual Features
 * Cube representing
   * Create by explicitly setting each sticker
   * Deeper than two levels for moves is not possible, need to implement a more general notation, like SiGN
+
+* CLI
 
 Cube Representation
 -------------------
