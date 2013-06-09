@@ -1,6 +1,3 @@
-require "minitest/autorun"
-require "minitest/mock"
-
 module CubeSeer
   class CubeFilter
     attr_accessor :cube

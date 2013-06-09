@@ -1,5 +1,6 @@
 require_relative "test_helper"
 
+
 module CubeSeer
   class FilterTest < Minitest::Test
     def setup
