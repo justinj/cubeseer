@@ -1,9 +1,8 @@
 require "fileutils"
 require "sinatra"
 require 'digest/sha1'
-require_relative "../lib/heise_expander"
-require_relative "../lib/alg_inverter"
-require_relative "../lib/cube_renderer"
+$:.unshift File.join(File.dirname(__FILE__), *%w{ .. lib })
+require "cubeseer"
 
 get "/cube" do
   scramble = get_scramble(params)
