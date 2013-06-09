@@ -1,5 +1,6 @@
-require "minitest/mock"
 require "minitest/autorun"
+require "minitest/mock"
+
 require_relative "../lib/cubeseer/alg_expander"
 require_relative "../lib/cubeseer/alg_inverter"
 require_relative "../lib/cubeseer/color_scheme"
