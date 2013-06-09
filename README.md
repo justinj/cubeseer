@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/justinj/cubeseer.png?branch=master)](https://travis-ci.org/justinj/cubeseer)
+
 CubeSeer
 --------
 
