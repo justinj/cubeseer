@@ -1,10 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    minitest (5.0.3)
     quick_magick (0.8.0)
+    rake (10.0.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  minitest
   quick_magick
+  rake

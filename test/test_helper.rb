@@ -1,4 +1,3 @@
-require "minitest/mock"
 require "minitest/autorun"
 
 require_relative "../lib/cubeseer/alg_expander"
