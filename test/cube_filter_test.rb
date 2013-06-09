@@ -1,5 +1,4 @@
-require "minitest"
-require_relative "../lib/cube_filter"
+require_relative "test_helper"
 
 module CubeSeer
   class FilterTest < Minitest::Test

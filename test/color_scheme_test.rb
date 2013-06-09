@@ -1,4 +1,4 @@
-require_relative "../lib/color_scheme"
+require_relative "test_helper"
 
 module CubeSeer
   class ColorSchemeTest < Minitest::Test

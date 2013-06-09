@@ -1,4 +1,5 @@
-require_relative "../lib/alg_inverter"
+require_relative "test_helper"
+
 module CubeSeer
   class AlgInverterTest < Minitest::Test
     def test_blank

@@ -1,4 +1,4 @@
-require_relative "../lib/heise_expander.rb"
+require_relative "test_helper"
 
 module CubeSeer
   class HeiseExpanderTest < Minitest::Test

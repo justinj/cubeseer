@@ -1,4 +1,4 @@
-require_relative "../lib/cube"
+require_relative "test_helper"
 
 module CubeSeer
   class QueryTest < Minitest::Test
