@@ -95,17 +95,11 @@ module CubeSeer
       15
     end
 
-    def render_sticker(x, y, w, h, color)
-      render_rect(x, y, w, h, outline_color)
-      render_rect(x + outline_thickness, 
-                  y + outline_thickness, 
-                  w - outline_thickness * 2, 
-                  h - outline_thickness * 2, color)
-    end
-
-    def render_rect(x,y,w,h,col)
+    def render_sticker(x,y,w,h,col)
+      image.stroke = outline_color.to_s
+      image.strokewidth = outline_thickness
       image.fill = col.to_s
-      image.draw_rectangle(x,y, x + w, y + h)
+      image.draw_polygon([[x,y], [x + w, y], [x + w, y + h], [x, y + h]])
     end
 
     def outline_thickness
