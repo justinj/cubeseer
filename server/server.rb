@@ -4,8 +4,6 @@ require 'digest/sha1'
 $:.unshift File.join(File.dirname(__FILE__), *%w{ .. lib })
 require "cubeseer"
 
-set :logging, true
-
 get "/cube" do
   scramble = get_scramble(params)
   opts = {}
