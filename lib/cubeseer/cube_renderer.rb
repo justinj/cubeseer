@@ -17,6 +17,7 @@ module CubeSeer
       @size = clamp(opts[:size], MIN_CUBE_SIZE, MAX_CUBE_SIZE)
       @scheme = ColorScheme.from_string(opts[:colors])
       @cube = Cube.algorithm(size, opts[:alg])
+      @cube = CubeFilter.new(@cube, opts)
     end
 
     def clamp(val, lower, upper)

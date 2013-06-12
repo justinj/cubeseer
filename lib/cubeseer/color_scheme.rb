@@ -42,7 +42,8 @@ module CubeSeer
         R: :red,
         L: :orange,
         D: :yellow,
-        B: :blue
+        B: :blue,
+        X: :gray
       }
     end
   end

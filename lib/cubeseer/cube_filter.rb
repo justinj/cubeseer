@@ -2,8 +2,10 @@ module CubeSeer
   class CubeFilter
     attr_accessor :cube
 
-    def initialize
+    def initialize(cube, opts)
       @filters = []
+      @cube = cube
+      show(opts)
     end
 
     def query(q)
@@ -28,11 +30,11 @@ module CubeSeer
     def add_filter_for(piece_type, inclusive)
       add_filter do |result|
         case piece_type
-        when :edges
+        when "edges"
           filter(result, inclusive) { |r, c, s| edge_piece?(r, c, s) }
-        when :corners
+        when "corners"
           filter(result, inclusive) { |r, c, s| corner_piece?(r, c, s) }
-        when :centers
+        when "centers"
           filter(result, inclusive) { |r, c, s| center_piece?(r, c, s) }
         end
       end

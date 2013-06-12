@@ -4,12 +4,15 @@ require 'digest/sha1'
 $:.unshift File.join(File.dirname(__FILE__), *%w{ .. lib })
 require "cubeseer"
 
+set :logging, true
+
 get "/cube" do
   scramble = get_scramble(params)
   opts = {}
   opts[:alg] = scramble
-  opts[:colors] = params["colors"]
-  opts[:size] = params["size"].to_i if params.has_key? "size"
+  params.each_key do |key|
+    opts[key.to_sym] = params[key]
+  end
   create_image(opts)
 end
 
