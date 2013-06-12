@@ -27,15 +27,15 @@ module CubeSeer
 
     private
 
-    def add_filter_for(piece_type, inclusive)
+    def add_filter_for(piece_type, inclusivity)
       add_filter do |result|
-        case piece_type
-        when "edges"
-          filter(result, inclusive) { |r, c, s| edge_piece?(r, c, s) }
-        when "corners"
-          filter(result, inclusive) { |r, c, s| corner_piece?(r, c, s) }
-        when "centers"
-          filter(result, inclusive) { |r, c, s| center_piece?(r, c, s) }
+        case piece_type.to_sym
+        when :edges
+          filter(result, inclusivity) { |r, c, s| edge_piece?(r, c, s) }
+        when :corners
+          filter(result, inclusivity) { |r, c, s| corner_piece?(r, c, s) }
+        when :centers
+          filter(result, inclusivity) { |r, c, s| center_piece?(r, c, s) }
         end
       end
     end
