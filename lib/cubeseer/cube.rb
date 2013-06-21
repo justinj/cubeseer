@@ -64,8 +64,10 @@ module CubeSeer
     def turn_depth(move)
       if rotation? move
         size
+      elsif move.end_with?("w")
+        2 
       else
-        move.end_with?("w") ? 2 : 1
+        1
       end
     end
 
