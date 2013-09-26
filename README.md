@@ -15,29 +15,30 @@ Examples
 The links show how each image was created, they might take a moment to show up since they are hosted on a free Heroku account.
 
 
-![Sexy Move](images/sexy.png)
-
 [Sexy Move!](http://cubeseer.herokuapp.com/cube?alg=RUR'U')
 
-![Tperm](images/tperm.png)
+![Sexy Move](images/sexy.png)
 
 [It works great for PLLs](http://cubeseer.herokuapp.com/cube?case=RUR'U'R'FR2U'R'U'RUR'F')
 
-![Virtual](images/heise.png)
+![Tperm](images/tperm.png)
 
 [If you're used to virtual cubes, you can supply an alg that way too](http://cubeseer.herokuapp.com/cube?heise=kjejjifdkjejjifd)
 
-![4x4](images/4x4.png)
+![Virtual](images/heise.png)
 
 [Different sized cubes are also possible](http://cubeseer.herokuapp.com/cube?size=4&alg=RwU2xRwU2RwU2Rw'U2LwU2Rw'U2RwU2Rw'U2Rw')
 
-![Color Scheme](images/diffcolourschemes.png)
+![4x4](images/4x4.png)
 
 [Changing the colour scheme](http://cubeseer.herokuapp.com/cube?colors=wrgboy&heisecase=kufkufkufkuffkufkufkufku)
 
-![OLL](images/oll.png)
+![Color Scheme](images/diffcolourschemes.png)
 
 [Ignoring stickers lets you create OLL diagrams as well](http://cubeseer.herokuapp.com/cube?colors=yxxxxx&heisecase=hkhiifkfijkgg)
+
+![OLL](images/oll.png)
+
 
 TODO
 ----
